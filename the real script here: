@@ -1,0 +1,193 @@
+--me adiciona no discordo
+--vini_lol#6001
+
+--use com cautela >:)
+
+
+
+
+
+
+
+
+
+
+local Context = game:GetService("ScriptContext")
+for _, Connection in next, getconnections(Context.Error) do
+    Connection:Disable()
+end
+
+
+
+
+local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/Vape.txt")()
+
+
+local win = lib:Window("vinilol's cw script lol :skull:",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl)
+
+local tab = win:Tab("client lol")
+
+
+tab:Toggle("velocidade",false, function(t)
+    if t == true then   
+        getgenv().WalkSpeedValue = 35; --set your desired walkspeed here
+local Player = game:service'Players'.LocalPlayer;
+Player.Character.Humanoid:GetPropertyChangedSignal'WalkSpeed':Connect(function()
+Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+end)
+Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+    end 
+
+
+    if t == false then
+            getgenv().WalkSpeedValue = 16; --set your desired walkspeed here
+    local Player = game:service'Players'.LocalPlayer;
+    Player.Character.Humanoid:GetPropertyChangedSignal'WalkSpeed':Connect(function()
+    Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+    end)
+    Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+        end
+    end)
+
+    tab:Toggle("pulo",false, function(t)
+        if t == true then
+            game.Workspace.Gravity = 70
+        end 
+    
+    
+        if t == false then
+            game.Workspace.Gravity = 175
+        end
+    end)
+ -- i gotta fucking work on this - 11pm (got skl tmr aswell ffffff)
+tab:Button("stamina infinita!?", function()
+    for i,v in pairs(getgc(true)) do
+        if typeof(v) == 'table' and rawget(v, '_setStamina') then
+         v._setStamina = function(a, b)
+             a._stamina = math.huge
+             a._staminaChangedSignal:Fire(99)
+           end
+         end
+       end
+ end)
+
+
+
+    local comb = win:Tab("combate >:(") -- yes i named it comb and what
+    comb:Toggle("parry automatica lol",false, function(t)
+        local lp = game.Players.LocalPlayer
+local animationInfo = {}
+
+function getInfo(id)
+  local success, info = pcall(function()
+      return game:GetService("MarketplaceService"):GetProductInfo(id)
+  end)
+  if success then
+      return info
+  end
+  return {Name=''}
+end
+function block(player)
+  keypress(0x46)
+  wait()
+  keyrelease(0x46)
+end
+
+local AnimNames = {
+  'Slash',
+  'Swing',
+  'Sword'
+}
+
+function playerAdded(v)
+    local function charadded(char)
+      local humanoid = char:WaitForChild("Humanoid", 5)
+      if humanoid then
+          humanoid.AnimationPlayed:Connect(function(track)
+              local info = animationInfo[track.Animation.AnimationId]
+              if not info then
+                  info = getInfo(tonumber(track.Animation.AnimationId:match("%d+")))
+                  animationInfo[track.Animation.AnimationId] = info
+              end
+             
+              if (lp.Character and lp.Character:FindFirstChild("Head") and v.Character:FindFirstChild("Head")) then
+                  local mag = (v.Character.Head.Position - lp.Character.Head.Position).Magnitude
+                  if mag < 12  then
+                     
+                      for _, animName in pairs(AnimNames) do
+                          if info.Name:match(animName) then
+                              pcall(block, v)
+                          end
+                      end
+                     
+                  end
+              end
+          end)
+      end
+  end
+ 
+  if v.Character then
+      charadded(v.Character)
+  end
+  v.CharacterAdded:Connect(charadded)
+end
+
+for i,v in pairs(game.Players:GetPlayers()) do
+   if v ~= lp then
+       playerAdded(v)
+   end
+end
+
+game.Players.PlayerAdded:Connect(playerAdded)
+    end)
+
+
+    comb:Toggle("anti-parry lul",false, function(t)
+        if t == true then
+            local plr = game:GetService("Players").LocalPlayer
+local data = plr.characterData
+data.IsStunned:GetPropertyChangedSignal("Value"):Connect(function()
+   data.IsStunned = false
+end)
+        end 
+    
+    
+        if t == false then
+            local plr = game:GetService("Players").LocalPlayer
+local data = plr.characterData
+data.IsStunned:GetPropertyChangedSignal("Value"):Connect(function()
+   data.IsStunned = true
+end)
+        end
+    end)
+
+        local misc = win:Tab("outros roles ai") -- yes i named it comb and what
+misc:Button("exconde o nome :3", function()
+              local plr = game:GetService("Players").LocalPlayer
+         plr.Character.Head.face:Destroy()
+end)
+       
+    
+
+
+
+
+        
+        
+    
+
+
+
+
+    
+
+
+
+
+
+
+local changeclr = win:Tab("mudar cor da UI lul")
+
+changeclr:Colorpicker("mudar a cor da UI",Color3.fromRGB(44, 120, 224), function(t)
+lib:ChangePresetColor(Color3.fromRGB(t.R * 255, t.G * 255, t.B * 255))
+end)
